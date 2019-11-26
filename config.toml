@@ -1,0 +1,17 @@
+baseURL = "https://chizu-com.web.app"
+languageCode = "ja-jp"
+title = "chizuchizu.com"
+theme = "hugo-lamp"
+pygmentsCodeFences = true
+
+[params]
+  mainSections = ["posts"]
+  subtitle = "Python中心の技術ブログ"
+  author = "チズチズ"
+  logo = "/img/avatar.png"
+  description = "A light responsive Hugo AMP theme for blogger"
+  paginate = 10
+
+  # Social networks
+  github = "Chizuchizu"
+  twitter = "chizu_potato"

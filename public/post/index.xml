@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on chizuchizu.com</title>
+    <link>https://chizu-com.web.app/post/</link>
+    <description>Recent content in Posts on chizuchizu.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Mon, 25 Nov 2019 14:09:24 +0700</lastBuildDate>
+    
+	<atom:link href="https://chizu-com.web.app/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>緯度経度から付近の地図を画像で保存するtip</title>
+      <link>https://chizu-com.web.app/post/signate-12/</link>
+      <pubDate>Mon, 25 Nov 2019 14:09:24 +0700</pubDate>
+      
+      <guid>https://chizu-com.web.app/post/signate-12/</guid>
+      <description>先日、SIGNATEのマイナビコンペが終了しました。
+自分のチームではアイデア賞を入賞しましたが、そこで行った処理の一部についてまとめようと思います。（全体の振り返りはまた今度）
+コードは最後に書きます
+どんな処理をするのかな 1.foliumで地図データのhtmlを生成
+2.seleniumでhtmlファイルをクロップし、pngファイルで保存する
+するだけです。
+ただ、調べてもあまり情報がなかったので書こうかなと思いました。 ①foliumで地図データのhtmlを生成 そもそもfoliumを知っている人はどれくらいいるのでしょうか。少なくとも僕は今まで知りませんでした。
+https://qiita.com/pork_steak/items/f551fa09794831100faa ここの記事がわかりやすかったです。
+試しにやってみるとこのようになります。（読み込みが終わってないですが）
+引数に緯度経度を渡してあげれば勝手にファイルを作ってくれるのでかんたんにできます。
+ちなみに白黒や地形図などいろんな種類の地図を出力させることもできます。
+ .resizeimage { width: 75%; } .resizeimage img { width: 100%; }  ②seleniumでhtmlファイルをクロップすし、pngファイルで保存する driver.save_screenshot()
+でできます。引数には保存するパスを指定します。
+地図データが意外に重いので2秒くらいは待ったほうがいいと思います（time.sleep(2)）
+気を使うとしたら、ファイルのパスですね。
+driver.get()では絶対パスが必要です。
+sys.pathでワーキングディレクトリを取得するので、それに相対パスにくっつけることで絶対パスにすることができます。
+driver.get(&amp;#34;file:///{}/sample.html&amp;#34;.format(sys.path[0]))&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt; まとめ あらかんたん。調べてみれば案外かんたんにできるものですね。
+マイナビコンペではこれを使って全データの地図を取得しました。
+データ数が多く、1回のループに5秒くらいかかったのでjoblibで全コア使用し一晩ぶん回してやっと終わりました。
+train, test合わせて20GB超えてしまったので驚きました（Google Driveの100GBプラン入っててよかった）
+コードをおいておきます
+import folium from selenium import webdriver from selenium.webdriver.chrome.options import Options import time import sys import chromedriver_binary copyright_osm = &amp;#39;&amp;amp;copy; &amp;lt;a href=&amp;#34;http://osm.org/copyright&amp;#34;&amp;gt;OpenStreetMap&amp;lt;/a&amp;gt; contributors&amp;#39; def make_html(lng, lat): # zoom_startは拡大率みたいなもの（大きいほうが拡大される） map_data = folium.</description>
+    </item>
+    
+    <item>
+      <title>第11回タイピングサミットレポート</title>
+      <link>https://chizu-com.web.app/post/11-typing/</link>
+      <pubDate>Thu, 26 Sep 2019 14:09:24 +0700</pubDate>
+      
+      <guid>https://chizu-com.web.app/post/11-typing/</guid>
+      <description>1日目と3日目に参加したチズチズです。
+初参加でしたが、みんな優しかったので何とか馴染めました。
+1日目 初めて夢の島に上陸。広くて整備はしっかりされている印象。
+着いた時、誰が誰だかわかりませんでした。（知ってたのはRTCに出てたのんさんやPocariさんくらい）
+早めに到着したので会場準備を手伝いました。じぇすたーさんと一緒にトロフィーをかっこよく配置していました。
+豪華なトロフィーがたくさん👀
+飲み物入れられるそうです。デザインの癖が強かったですが便利そうです。
+えーｔｙぴんｇ
+お昼は近くのカレーうどん屋でイタリアンカレーうどんを食べました。かめおさんやじぇすたーさんとのんびり話してました。
+戻ったらTODをしました。（初）お題がどこに出るかわからなかったので少し難しかったです。よーっしーさん（改名したらしい）がとても速かったです。
+WT対戦も何人かとしました。paraphrohnさんの速さが圧倒的で一回も勝てませんでした。
+何だかんだWTは10回程しかプレイしたことがなかったので自分がどれくらい速いのかはよくわかりませんでした。
+タイピングリレーはハチャメチャで面白かったです。
+僕はひらがなとプログラミングを担当しました。
+ひらがな1000文字？をタイピングするので途中からゲシュタルト崩壊してきて打つのが辛くなってきました。何とか打ち切れましたが、遅かったのでチームメンバーの足を引っ張ってしまいました。
+プログラミングはPythonのコードだったのでいける！と思ったんですけどPEPを無視したクソコードだったのできつかったです。前半がTWの称号をリストにするコードで指がおかしくなりそうでした。（シフトの入れ替え等）
+ただこのコーナーは非常に面白かったのでまたやってほしいです。
+パンツさん（タイピンガーZの製作者）によるゲリラLTを聞きました。
+タイピングをe-sportsにするためのアイデアがテーマとなっていました。非常に興味深かったです。自分も近い内に誰でも楽しめるゲーム性の高いタイピングゲームを開発したいと思うきっかけになりました。
+パンツさんと雑談していたら君もLTしないか？と誘われた（ア）ので僕もLTすることになりました（3日目に）
+本当に急遽だったので2日目（タイピングサミットには参加しない予定だったので）に急いで作りました。
+USK君とMIOちゃんにも話しかけることが出来たので幸せです。お菓子美味しかった。
+やださんのキーボード打ちやすすぎたのでいつか欲しい（Majestourchらしい）
+てょーん
+2日目 3日目 終わりに </description>
+    </item>
+    
+  </channel>
+</rss>
