@@ -1,0 +1,48 @@
+{{ define "main" }}
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">{{ .Title }}</h1>
+      <p class="entry-meta"><span class="entry-time">{{ .Date.Format "Jan 2, 2006" }}</span> {{ .ReadingTime }} min read</p>
+    </header>
+    {{ partial "adsense.html" . }}
+
+    <article class="post-content">{{- /* 一応「tocMove」で動作を切り替えられるようにしておく */ -}}
+      {{- if (.Param "tocMove" | default true) -}}
+          {{- /* 正規表現でh[1-6]を探す */ -}}
+          {{- $header := (findRE "<h[1-6].*?>(?:.|\n)*?</h[1-6]>" .Content) -}}
+          {{- /* 最初に出現するh[1-6]を取得 */ -}}
+          {{- $firstH := index $header 0 -}}
+      
+          {{- if ne $firstH nil -}}
+              {{- /* ヘッダーの前にToCを結合した「新しいヘッダー」を作成 */ -}}
+              {{- $newH := printf `%s%s` .TableOfContents $firstH -}}
+              {{- /* 古いヘッダーを新しいヘッダーに置換して出力 */ -}}
+              {{- replace .Content $firstH $newH | safeHTML -}}
+          {{- else -}}
+              {{- /* そもそもヘッダーがない時は普通に出力 */ -}}
+              {{- .Content -}}
+          {{- end -}}
+      {{- else -}}
+          {{- /* tocMove = falseの時 */ -}}
+          {{- .TableOfContents -}}
+          {{- .Content -}}
+      {{- end -}}</article>
+    <footer class="post-footer">
+      {{ if isset .Params "tags" }}
+      <ul class="post-tags">
+        {{ range $tag := .Params.tags }}
+          <li class="post-tag"><a href="/tags/{{ $tag | urlize }}"><span class="tag">{{ $tag | title }}</span></a></li>
+        {{ end }}
+      </ul>
+      {{ end }}
+      <div class="sharing">
+        <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u={{ .Permalink }}" title="Share on Facebook">
+          <svg class="icon icon-facebook" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
+        </a>
+        <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text={{ .Title }}&amp;url={{ .Permalink }}" title="Share on Twitter">
+          <svg class="icon icon-twitter" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
+        </a>
+      </div>
+    </footer>
+  </section>
+{{ end }}
